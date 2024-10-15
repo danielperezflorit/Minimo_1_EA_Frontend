@@ -1,0 +1,37 @@
+/* Barra de navegación con Flexbox */
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: #333;
+    display: flex;
+    /*justify-content: space-between;*/ /* Espaciado entre los elementos */
+    align-items: center;
+    flex-wrap: wrap; /* Para que sea adaptable en pantallas pequeñas */
+}
+
+li {
+    margin: 0;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #111; /* Cambia el color al pasar el ratón */
+}
+
+/* Clase activa aplicada por Angular */
+.active {
+    background-color: #04AA6D; /* Cambia el color de fondo del enlace activo */
+}
+
+/* Para los items que queremos alinear a la derecha */
+.right {
+    margin-left: auto; /* Empuja este item a la derecha */
+}
