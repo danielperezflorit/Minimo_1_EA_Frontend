@@ -1,6 +1,9 @@
 <div class="container">
+  <!-- Botón para mostrar el formulario -->
+  <button (click)="mostrarFormulario()">Crear nuevo usuario</button>
+
   <!-- Formulario a la izquierda -->
-  <div class="form-container">
+  <div *ngIf="formularioVisible" class="form-container">
     <h1>{{ indiceEdicion !== null ? 'Editar usuario' : 'Agregar un nuevo usuario' }}</h1>
     <form (ngSubmit)="agregarElemento(userForm)" #userForm="ngForm">
       <div class="form-group">
@@ -50,33 +53,34 @@
         <input 
           id="confirmarPassword" 
           [(ngModel)]="confirmarPassword" 
-          name="confirmarPassword" 
+          name="confirmarPassword"             
           type="password" 
           placeholder="Confirmar Password" 
           required 
           minlength="7" />
-        <div *ngIf="confirmarPassword !== nuevoUsuario.password && confirmarPassword.length > 0 && formSubmitted" class="error-message">
-          Las contraseñas no coinciden.
-        </div>
       </div>
 
       <div class="form-group">
         <label for="biografia">Biografía:</label>
-        <input 
-          id="biografia" 
-          [(ngModel)]="nuevoUsuario.comment" 
-          name="comment" 
-          placeholder="Biografía" />
+        <input             
+        id="biografia" 
+        [(ngModel)]="nuevoUsuario.comment" 
+        name="comment" 
+        placeholder="Biografía" />
       </div>
 
       <button 
-        type="submit" 
-        class="submit-button" 
-        [disabled]="!userForm.valid">
-        {{ indiceEdicion !== null ? 'Actualizar' : 'Agregar' }}
+      type="submit" 
+      class="submit-button" 
+      [disabled]="!userForm.valid">
+      {{ indiceEdicion !== null ? 'Actualizar' : 'Agregar' }}
       </button>
+
+      <!-- Botón para cerrar el formulario -->
+      <button type="button" (click)="cerrarFormulario()">Cerrar</button>
     </form>
   </div>
+
 
   <!-- Lista de usuarios a la derecha -->
   <div class="lista-usuarios">
@@ -106,12 +110,6 @@
             <!-- Si desplegarBiografia[i] es verdadero, muestra todo, si no, trunca a 10 caracteres -->
             {{ desplegarBiografia[i] ? usuario.comment : (usuario.comment | truncate: 10) }}
           </p>
-          <h4><strong>Experiencias:</strong></h4>
-        <ul>
-          <li *ngFor="let experiencie of usuario.experiencies">
-            {{ getExpNameById(experiencie) }}
-          </li>
-        </ul>
           <!-- Botón para alternar entre mostrar más o menos en la biografía -->
           <button (click)="toggleBiografia(i)" class="leer-mas">
             {{ desplegarBiografia[i] ? 'Leer menos' : 'Leer más' }}
@@ -123,6 +121,7 @@
     </ul>
   </div>
 </div>
+
 <div class="pagination-container">
   <!-- Números del paginador -->
   <div class="paginator">
@@ -139,4 +138,9 @@
       {{ content }}
     </p>
   </div>
+  <div class="number-input">
+    <input type="number" [(ngModel)]="numeroPP" placeholder="0">
+    <button (click)="changeNumUsers()">Enviar</button>
+  </div>
 </div>
+
