@@ -89,6 +89,12 @@
       <li *ngFor="let usuario of usuarios; let i = index">
         <div class="user-info">
           <strong>{{ usuario.name }}</strong>
+
+          <!-- Botón para alternar habilitación -->
+            <button (click)="toggleHabilitacion(i)">
+              {{ usuario.habilitado ? 'Inhabilitar' : 'Habilitar' }}
+            </button>
+            
           <div class="button-container">
             <button (click)="toggleDesplegable(i)" class="detalles mostrar-detalles">
               {{ desplegado[i] ? 'Ocultar detalles' : 'Mostrar detalles' }}

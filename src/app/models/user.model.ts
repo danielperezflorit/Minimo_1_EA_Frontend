@@ -4,5 +4,6 @@ export interface User {
   mail: string;     // Añadir el campo email
   password: string;
   comment: string;    // Este campo es la "Biografía"
+  habilitado: boolean;  //Indica si el usuario esta habilitado o no
 }
   

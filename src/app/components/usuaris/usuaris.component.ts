@@ -38,7 +38,8 @@ export class UsuarisComponent implements OnInit {
     name: '',
     mail: '', // Añadir el campo email
     password: '',
-    comment: ''
+    comment: '',
+    habilitado: true
   };
 
   confirmarPassword: string = ''; // Campo para confirmar la contraseña
@@ -82,7 +83,8 @@ export class UsuarisComponent implements OnInit {
       name: '',
       mail: '', // Limpiar el campo email
       password: '',
-      comment: ''
+      comment: '',
+      habilitado: true
     };
     this.confirmarPassword = ''; // Reiniciar el campo de confirmar contraseña
     this.formSubmitted = false; // Restablecer el estado del formulario para no mostrar errores
@@ -188,7 +190,8 @@ export class UsuarisComponent implements OnInit {
         name: this.nuevoUsuario.name,
         mail: this.nuevoUsuario.mail,
         password: this.nuevoUsuario.password,
-        comment: this.nuevoUsuario.comment
+        comment: this.nuevoUsuario.comment,
+        habilitado: this.nuevoUsuario.habilitado
       };
   
       // Enviar el usuario a la API a través del UserService
@@ -214,7 +217,8 @@ export class UsuarisComponent implements OnInit {
       name: '',
       mail: '', // Limpiar el campo email
       password: '',
-      comment: ''
+      comment: '',
+      habilitado: true
     };
     this.confirmarPassword = ''; // Reiniciar el campo de confirmar contraseña
     this.formSubmitted = false; // Restablecer el estado del formulario para no mostrar errores
@@ -280,6 +284,25 @@ export class UsuarisComponent implements OnInit {
   getExpNameById(experienciesId: string): string|null {
     const experiencies = this.experiencias.find((u) => u._id === experienciesId);
     return experiencies ? experiencies.description : 'Desconocido';
+  }
+  
+  toggleHabilitacion(index: number): void {
+    const usuario = this.usuarios[index];
+    
+    // Alternar el valor de habilitado
+    const nuevoEstado = !usuario.habilitado;
+  
+    // Llamar al servicio para actualizar el estado en la base de datos
+    this.userService.toggleHabilitacion(usuario._id!, nuevoEstado).subscribe(
+      (actualizado: User) => {
+        // Actualizar el usuario en el array del frontend
+        this.usuarios[index].habilitado = nuevoEstado;
+        console.log(`Usuario ${actualizado.name} actualizado: habilitado=${actualizado.habilitado}`);
+      },
+      (error) => {
+        console.error('Error al cambiar el estado de habilitación:', error);
+      }
+    );
   }
 }
 
