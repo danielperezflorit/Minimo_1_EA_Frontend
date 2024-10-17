@@ -23,12 +23,12 @@ li a {
 }
 
 li a:hover {
-    background-color: #111; /* Cambia el color al pasar el ratón */
+    background-color: #4C0000; /* Cambia el color al pasar el ratón */
 }
 
 /* Clase activa aplicada por Angular */
 .active {
-    background-color: #04AA6D; /* Cambia el color de fondo del enlace activo */
+    background-color: #8B0000; /* Cambia el color de fondo del enlace activo */
 }
 
 /* Para los items que queremos alinear a la derecha */

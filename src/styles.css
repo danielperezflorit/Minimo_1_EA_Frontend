@@ -1,1 +1,6 @@
-
+/* Estilo global para toda la página con fondo blanco roto */
+body {
+    background-color: #cfc49b; /* Blanco roto */
+    
+  }
+  
