@@ -1,0 +1,55 @@
+/* Estilos generales */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #FAF3E0; /* Blanco roto para el fondo */
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Contenedor de la lista de vinos */
+  .vinos-list {
+    background-color: #4C0000; /* Rojo oscuro para el fondo */
+    color: #FAF3E0; /* Blanco roto para el texto */
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
+    width: 50%;
+    margin: 20px auto;
+  }
+  
+  .vinos-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .vinos-list li {
+    background-color: #8B0000; /* Rojo vino para cada item */
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .vinos-list h3, .vinos-list p {
+    margin: 5px 0;
+  }
+  
+  /* Botón de eliminar (si se implementa en el futuro) */
+  button {
+    background-color: #4CAF50; /* Verde hoja */
+    border: none;
+    color: white;
+    padding: 12px 20px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 25px;
+    margin-top: 15px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  button:hover {
+    background-color: #388E3C; /* Verde más oscuro */
+  }
+  
