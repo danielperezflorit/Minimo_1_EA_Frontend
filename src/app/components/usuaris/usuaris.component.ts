@@ -24,19 +24,22 @@ export class UsuarisComponent implements OnInit {
   desplegado: boolean[] = []; // Controla si el desplegable de cada usuario está abierto o cerrado
   desplegarBiografia: boolean[] = [];
   mostrarPassword: boolean[] = []; // Array para controlar la visibilidad de la contraseña
+  formularioVisible: boolean = false;
   longituddepaginas: number = 10;
+  numeroPP: number = 5;
   resuelto: boolean = false;
   newPage: pageInterface = {
     paginas: 0,
     numerodecaracterespp: 5
   };
 
+
   nuevoUsuario: User = {
     name: '',
     mail: '', // Añadir el campo email
     password: '',
     comment: '',
-    experiencies:[]
+    habilitado: true
   };
 
   confirmarPassword: string = ''; // Campo para confirmar la contraseña
@@ -66,14 +69,6 @@ export class UsuarisComponent implements OnInit {
   // Índice de la página actualmente seleccionada
   currentPage: number = 1;
 
-  // Función para cambiar la página cuando se hace clic en un número
-  changePage(page: number): void {
-    this.currentPage = page;
-    this.newPage.paginas = page - 1;
-    this.getUsers();
-  }
-
-
   ngOnInit(): void {
     // Cargar usuarios desde el UserService
     this.getUsers();
@@ -81,10 +76,38 @@ export class UsuarisComponent implements OnInit {
     this.calculPage();
   }
 
+  mostrarFormulario() {
+    this.formularioVisible = true;
+    this.indiceEdicion = null;
+    this.nuevoUsuario = {
+      name: '',
+      mail: '', // Limpiar el campo email
+      password: '',
+      comment: '',
+      habilitado: true
+    };
+    this.confirmarPassword = ''; // Reiniciar el campo de confirmar contraseña
+    this.formSubmitted = false; // Restablecer el estado del formulario para no mostrar errores
+  }
+
+  // Método para cerrar el formulario
+  cerrarFormulario() {
+    this.formularioVisible = false;
+  }
+
+  
+  // Función para cambiar la página cuando se hace clic en un número
+  changePage(page: number): void {
+    this.currentPage = page;
+    this.newPage.paginas = page - 1;
+    this.getUsers();
+  }
+
   calculPage(): void {
+    this.currentPage=1;
     this.userService.getUsers(this.newPage).subscribe(
       (data: User[]) => {
-        if (data.length < 5) {
+        if (data.length < this.newPage.numerodecaracterespp) {
           // Si recibimos menos de 5 usuarios, asumimos que es la última página
           this.resuelto = true;
           this.longituddepaginas = this.newPage.paginas + 1;
@@ -102,7 +125,16 @@ export class UsuarisComponent implements OnInit {
       }
     );
   }
-  
+
+  async changeNumUsers():Promise<void>{
+    console.log('Número de usuarios ingresado:', this.newPage);
+    this.newPage.numerodecaracterespp = this.numeroPP;
+    this.newPage.paginas = 0;
+    this.currentPage = 1;
+    await console.log('Número de usuarios ingresado:', this.newPage);
+    await this.getUsers();
+    await this.calculPage();
+  }
 
   getUsers(): void {
     this.userService.getUsers(this.newPage).subscribe(
@@ -132,6 +164,7 @@ export class UsuarisComponent implements OnInit {
 
   // Función para agregar o modificar un usuario
   agregarElemento(userForm: NgForm): void {
+    console.log('va');
     this.formSubmitted = true;
   
     // Verificar si las contraseñas coinciden
@@ -158,7 +191,7 @@ export class UsuarisComponent implements OnInit {
         mail: this.nuevoUsuario.mail,
         password: this.nuevoUsuario.password,
         comment: this.nuevoUsuario.comment,
-        experiencies: this.nuevoUsuario.experiencies
+        habilitado: this.nuevoUsuario.habilitado
       };
   
       // Enviar el usuario a la API a través del UserService
@@ -172,7 +205,9 @@ export class UsuarisComponent implements OnInit {
     }
   
     // Limpiar los campos del formulario y restablecer su estado
+    this.indiceEdicion = null;
     this.resetForm(userForm);
+    this.cerrarFormulario();
   }
   
 
@@ -183,7 +218,7 @@ export class UsuarisComponent implements OnInit {
       mail: '', // Limpiar el campo email
       password: '',
       comment: '',
-      experiencies: []
+      habilitado: true
     };
     this.confirmarPassword = ''; // Reiniciar el campo de confirmar contraseña
     this.formSubmitted = false; // Restablecer el estado del formulario para no mostrar errores
@@ -192,9 +227,14 @@ export class UsuarisComponent implements OnInit {
 
   // Función para preparar la edición de un usuario
   prepararEdicion(usuario: User, index: number): void {
+    console.log('Va1')
+    this.formularioVisible = true;  
     this.usuarioEdicion = { ...usuario }; // Clonar el usuario para la edición
+    console.log('Va2',this.usuarioEdicion);
     this.nuevoUsuario = { ...usuario }; // Cargar los datos del usuario en el formulario
+    console.log('Va3',this.nuevoUsuario);
     this.indiceEdicion = index; // Almacenar el índice del usuario en edición
+    console.log('Va4',this.indiceEdicion);
     this.desplegado[index] = true; // Abrir el desplegable del usuario que se está editando
   }
 
@@ -244,6 +284,25 @@ export class UsuarisComponent implements OnInit {
   getExpNameById(experienciesId: string): string|null {
     const experiencies = this.experiencias.find((u) => u._id === experienciesId);
     return experiencies ? experiencies.description : 'Desconocido';
+  }
+  
+  toggleHabilitacion(index: number): void {
+    const usuario = this.usuarios[index];
+    
+    // Alternar el valor de habilitado
+    const nuevoEstado = !usuario.habilitado;
+  
+    // Llamar al servicio para actualizar el estado en la base de datos
+    this.userService.toggleHabilitacion(usuario._id!, nuevoEstado).subscribe(
+      (actualizado: User) => {
+        // Actualizar el usuario en el array del frontend
+        this.usuarios[index].habilitado = nuevoEstado;
+        console.log(`Usuario ${actualizado.name} actualizado: habilitado=${actualizado.habilitado}`);
+      },
+      (error) => {
+        console.error('Error al cambiar el estado de habilitación:', error);
+      }
+    );
   }
 }
 

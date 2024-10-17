@@ -31,6 +31,11 @@ export class UserService {
   deleteUserById(id: string): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/${id}`);
   }
+
+  //Habilitar o deshabilitar un usuario
+  toggleHabilitacion(id: string, habilitado: boolean): Observable<User> {
+    return this.http.patch<User>(`${this.apiUrl}/${id}/habilitacion`, { habilitado });
+  }
 }
 
 
