@@ -3,12 +3,14 @@ import { NgModule } from '@angular/core';
 import { UsuarisComponent } from './components/usuaris/usuaris.component';
 import { ExperienciaComponent } from './components/experiencia/experiencia.component';
 import { HomeComponent } from './components/home/home.component';
+import { VinosComponent } from './components/vinos/vinos.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' }, // Redirige a Home por defecto
   { path: 'home', component: HomeComponent },
   { path: 'usuaris', component: UsuarisComponent },
   { path: 'experiencia', component: ExperienciaComponent },
+  { path: 'vinos', component: VinosComponent },
   { path: '**', redirectTo: 'home' } // Redirige cualquier ruta desconocida a Home
 ];
 
