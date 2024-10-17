@@ -8,20 +8,12 @@
   }
   
   /* Imagen del logo de Angular */
-  .angular-logo {
-    width: 120px;
+  .winer-logo {
+    width: 300px;
     height: auto;
     margin-bottom: 20px; /* Separación del título */
     animation: bounce 2s infinite;
   }  
-  
-  /* Título */
-  .title {
-    font-size: 3.5rem;
-    color: #4C0000; /* Rojo oscuro */
-    margin-bottom: 30px;
-    animation: bounce 2s infinite; /* Añadir animación de rebote */
-  }
   
   /* Contenedor de botones */
   .button-container {
