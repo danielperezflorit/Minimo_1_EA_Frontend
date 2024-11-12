@@ -1,0 +1,40 @@
+<!-- components/hobbies/hobbies.component.html -->
+<h2>Hobbies</h2>
+
+<!-- Formulario para agregar o editar hobby -->
+<div>
+  <h3>{{ hobbyEdicion ? 'Editar Hobby' : 'Nuevo Hobby' }}</h3>
+  <form (ngSubmit)="hobbyEdicion ? actualizarHobby() : agregarHobby()">
+    <input 
+        [(ngModel)]="nuevoHobby.nombre" 
+        name="nombre" 
+        placeholder="Nombre" 
+        required />
+    
+    <input 
+        [(ngModel)]="nuevoHobby.tipo" 
+        name="tipo" 
+        placeholder="Tipo" 
+        required />
+    <input 
+        [(ngModel)]="nuevoHobby.nivel_popularidad" 
+        name="nivel" 
+        type="number" 
+        placeholder="Nivel Popularidad" 
+        required />
+    
+    <button type="submit">{{ hobbyEdicion ? 'Actualizar' : 'Agregar' }}</button>
+    <button type="button" (click)="hobbyEdicion = null">Cancelar</button>
+  
+    </form>
+</div>
+
+<!-- Lista de hobbies -->
+<ul>
+  <li *ngFor="let hobby of hobbies">
+    {{ hobby.nombre }} ({{ hobby.tipo }}) - Popularidad: {{ hobby.nivel_popularidad }}
+    <button (click)="prepararEdicion(hobby)">Editar</button>
+    <button (click)="eliminarHobby(hobby._id!)">Eliminar</button>
+  </li>
+</ul>
+

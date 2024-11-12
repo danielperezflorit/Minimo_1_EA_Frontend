@@ -4,6 +4,8 @@ import { UsuarisComponent } from './components/usuaris/usuaris.component';
 import { ExperienciaComponent } from './components/experiencia/experiencia.component';
 import { HomeComponent } from './components/home/home.component';
 import { VinosComponent } from './components/vinos/vinos.component';
+import { HobbiesComponent } from './components/hobbies/hobbies.component';
+
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' }, // Redirige a Home por defecto
@@ -11,7 +13,9 @@ export const routes: Routes = [
   { path: 'usuaris', component: UsuarisComponent },
   { path: 'experiencia', component: ExperienciaComponent },
   { path: 'vinos', component: VinosComponent },
+  { path: 'hobbies', component: HobbiesComponent },
   { path: '**', redirectTo: 'home' } // Redirige cualquier ruta desconocida a Home
+
 ];
 
 @NgModule({
@@ -19,5 +23,8 @@ export const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule {}
+
+
+
 
 
